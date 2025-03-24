@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
@@ -55,6 +57,9 @@ fun ReceiptsScreen(
         },
     ) { innerPadding ->
         when {
+            uiState.isLoading -> {
+                LoadingScreen()
+            }
             uiState.receipts.isNotEmpty() -> {
                 LazyColumn(
                     modifier = Modifier.padding(innerPadding).padding(mediumPadding),
@@ -85,6 +90,23 @@ fun ReceiptsScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun LoadingScreen() {
+    Box(
+        modifier =
+            Modifier
+                .fillMaxSize() // This will make the Box take up the entire screen
+                .padding(mediumPadding), // Optional padding around the box
+    ) {
+        CircularProgressIndicator(
+            modifier =
+                Modifier
+                    .align(Alignment.Center) // Centers the spinner inside the Box
+                    .size(50.dp), // Optional: size of the spinner
+        )
     }
 }
 
